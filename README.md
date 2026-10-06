@@ -34,7 +34,7 @@ The data is heavily imbalanced: Normal and DoS make up about 88% of all connecti
 
 ## Pipeline Overview
 
-**1. Import dataset** — Downloads the NSL-KDD dataset and stores it in `data/raw/`.
+**1. Import dataset** — Downloads the NSL-KDD dataset, extracts it, and stores it in `data/raw/`.
 
 **2. Preprocessing** — Loads the raw data and maps each attack name to one of the five classes. The mapping raises an error on any unrecognized attack name instead of silently defaulting to Normal; this check uncovered three misspelled entries in the attack lists (`loadmodule`, `httptunnel`, and `xlock`) that had been mislabeling real attacks as normal traffic. The categorical features `protocol_type`, `service`, and `flag` are one-hot encoded and combined with 37 numeric and binary features, giving 121 features in total. The zero-variance column `num_outbound_cmds` is dropped, and the `level` column is excluded since it describes difficulty rather than traffic. Finally, the data is split into training (56%), validation (24%), and test (20%) sets, stratified so every split keeps the same class proportions. The splits are saved with joblib.
 
